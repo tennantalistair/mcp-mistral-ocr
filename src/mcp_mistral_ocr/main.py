@@ -151,5 +151,18 @@ async def process_url_file(arguments: Dict[str, Any]) -> List[TextContent]:
             message=f"Error processing URL: {str(e)}"
         ))
 
+import os
+import uvicorn
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello from OCR API!"}
+
+# Get the PORT dynamically or default to 8080
+port = int(os.environ.get("PORT", 8080))
+
 if __name__ == "__main__":
-    app.run(transport='stdio')
+    uvicorn.run(app, host="0.0.0.0", port=port)
